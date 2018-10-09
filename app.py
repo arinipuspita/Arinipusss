@@ -62,6 +62,17 @@ def carimhs(nrp):
     elif(flag == "0"):
         return err
 
+def inputmhs(nrp, nama, alamat):
+    r = requests.post("http://www.aditmasih.tk/api_arinip/insert.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat})
+    data = r.json()
+
+    flag = data['flag']
+   
+    if(flag == "1"):
+        return 'Data '+nama+' berhasil dimasukkan\n'
+    elif(flag == "0"):
+        return 'Data gagal dimasukkan\n'
+
 # Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -74,6 +85,7 @@ def callback():
         abort(400)
     return 'OK'
 
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     text = event.message.text #simplify for receive message
@@ -84,8 +96,10 @@ def handle_message(event):
     data=text.split('-')
     if(data[0]=='lihat'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=carimhs(data[1])))
+    elif(data[0]=='tambah'):
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=inputmhs(data[1],data[2],data[3])))
 
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text = event.message.text + ' ' + profile.display_name))
+    #line_bot_api.reply_message(event.reply_token,TextSendMessage(text = event.message.text + ' ' + profile.display_name))
 
 import os
 if __name__ == "__main__":
