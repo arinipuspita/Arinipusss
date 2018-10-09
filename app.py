@@ -85,14 +85,14 @@ def hapusmhs(nrp):
         return 'Data gagal dihapus\n'
     
 def updatemhs(nrpLama,nrp,nama,kosan):
-    URLmhs = "http://www.aditmasih.tk/api-hafid/show.php?nrp=" + nrpLama
+    URLmhs = "http://www.aditmasih.tk/api_arinip/view.php?nrp=" + nrpLama
     r = requests.get(URLmhs)
     data = r.json()
     err = "data tidak ditemukan"
     nrp_lama=nrpLama
     flag = data['flag']
     if(flag == "1"):
-        r = requests.post("http://www.aditmasih.tk/api-hafid/update.php", data={'nrp': nrp, 'nama': nama, 'kosan': kosan, 'nrp_lama':nrp_lama})
+        r = requests.post("http://www.aditmasih.tk/api_arinip/update.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat, 'nrp_lama':nrp_lama})
         data = r.json()
         flag = data['flag']
 
