@@ -74,7 +74,7 @@ def inputmhs(nama, nrp, alamat):
         return 'Data gagal dimasukkan\n'
     
 def hapusmhs(nrp):
-    r = requests.post("http://www.aditmasih.tk/api_a/delete.php", data={'nrp': nrp})
+    r = requests.post("http://www.aditmasih.tk/api_arinip/delete.php", data={'nrp': nrp})
     data = r.json()
 
     flag = data['flag']
@@ -83,6 +83,7 @@ def hapusmhs(nrp):
         return 'Data '+nrp+' berhasil dihapus\n'
     elif(flag == "0"):
         return 'Data gagal dihapus\n'
+    
 # Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
