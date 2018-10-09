@@ -40,6 +40,27 @@ line_bot_api = LineBotApi('yedyEQI4iYlgdf6Y1NeXNIPCwtkRxDej+z9N/vn0vU80pGtpUO5Ui
 handler = WebhookHandler('a4f818fc0c5aa0b0b333c63def153323')
 #===========[ NOTE SAVER ]=======================
 notes = {}
+#REQUEST DATA MHS dibawah notes = {}
+def carimhs(nrp):
+    URLmhs = "http://www.aditmasih.tk/api_arinip/view.php?nrp=" + nrp
+    r = requests.get(URLmhs)
+    data = r.json()
+    err = "data tidak ditemukan"
+    
+    flag = data['flag']
+    if(flag == "1"):
+        nrp = data['data_angkatan'][0]['nrp']
+        nama = data['data_angkatan'][0]['nama']
+        alamat = data['data_angkatan'][0]['alamat']
+
+        # munculin semua, ga rapi, ada 'u' nya
+        # all_data = data['data_angkatan'][0]
+        data= "nama : "+nama+"\nnrp : "+nrp+"\nalamat : "+alamat
+        return data
+        # return all_data
+
+    elif(flag == "0"):
+        return err
 
 # Post Request
 @app.route("/callback", methods=['POST'])
@@ -55,10 +76,14 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    text = event.message.text #simplify for receove message
+    text = event.message.text #simplify for receive message
     sender = event.source.user_id #get usesenderr_id
     gid = event.source.sender_id #get group_id
     profile = line_bot_api.get_profile(sender)
+
+    data=text.split('-')
+    if(data[0]=='lihat'):
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=carimhs(data[1])))
 
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text = event.message.text + ' ' + profile.display_name))
 
