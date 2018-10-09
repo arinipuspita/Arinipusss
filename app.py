@@ -63,7 +63,7 @@ def carimhs(nrp):
         return err
 
 def inputmhs(nrp, nama, alamat):
-    r = requests.post("http://www.aditmasih.tk/api_arinip/insert.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat})
+    r = requests.post("http://www.aditmasih.tk/api_arinip/insert.php", data={'nama': nama, 'nrp': nrp, 'alamat': alamat})
     data = r.json()
 
     flag = data['flag']
