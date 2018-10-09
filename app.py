@@ -72,7 +72,17 @@ def inputmhs(nama, nrp, alamat):
         return 'Data '+nama+' berhasil dimasukkan\n'
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
+    
+def hapusmhs(nrp):
+    r = requests.post("http://www.aditmasih.tk/api_a/delete.php", data={'nrp': nrp})
+    data = r.json()
 
+    flag = data['flag']
+   
+    if(flag == "1"):
+        return 'Data '+nrp+' berhasil dihapus\n'
+    elif(flag == "0"):
+        return 'Data gagal dihapus\n'
 # Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -98,7 +108,8 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=carimhs(data[1])))
     elif(data[0]=='tambah'):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=inputmhs(data[1],data[2],data[3])))
-
+    elif(data[0]=='hapus'):
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=hapusmhs(data[1])))
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text = event.message.text + ' ' + profile.display_name))
 
 import os
