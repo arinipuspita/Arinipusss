@@ -73,8 +73,19 @@ def inputbarang(kodebarang, namabarang, jumlahbarang):
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
     
+def hapusbarang(kodebarang):
+    r = requests.post("http://www.aditmasih.tk/api_arinipunya/delete.php", data={'kodebarang': kodebarang})
+    data = r.json()
+
+    flag = data['flag']
+   
+    if(flag == "1"):
+        return 'Data '+kodebarang+' berhasil dihapus\n'
+    elif(flag == "0"):
+        return 'Data gagal dihapus\n' 
+
 #UPDATE
-def updatebarang(kodeLama,kodebarang,namabarang,kodebarang):
+def updatebarang(kodeLama,kodebarang,namabarang,jumlahbarangbarang):
     URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?kodebarang=" + kodeLama
     r = requests.get(URLmhs)
     data = r.json()
@@ -82,7 +93,7 @@ def updatebarang(kodeLama,kodebarang,namabarang,kodebarang):
     kode_lama=kodeLama
     flag = data['flag']
     if(flag == "1"):
-        r = requests.post("http://www.aditmasih.tk/api_arinipunya/update.php", data={ 'kode_lama':kode_lama,'namabarang': namabarang,'jumlahbarang': jumlahbarang,'kodebarang': kodebarang})
+        r = requests.post("http://www.aditmasih.tk/api_arinipunya/update.php", data={ 'kodebarang':kodebarang,'namabarang': namabarang,'jumlahbarang': jumlahbarang,'kode_lama': kode_lama})
         data = r.json()
         flag = data['flag']
 
