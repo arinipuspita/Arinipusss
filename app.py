@@ -41,63 +41,63 @@ handler = WebhookHandler('a4f818fc0c5aa0b0b333c63def153323')
 #===========[ NOTE SAVER ]=======================
 notes = {}
 #REQUEST DATA MHS dibawah notes = {}
-def carimhs(nrp):
-    URLmhs = "http://www.aditmasih.tk/api_arinip/view.php?nrp=" + nrp
+def caribarang(kodebarang):
+    URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?nrp=" + kodebarang
     r = requests.get(URLmhs)
     data = r.json()
     err = "data tidak ditemukan"
     
     flag = data['flag']
     if(flag == "1"):
-        nrp = data['data_angkatan'][0]['nrp']
-        nama = data['data_angkatan'][0]['nama']
-        alamat = data['data_angkatan'][0]['alamat']
+        kodebarang = data['persediaan_barang'][0]['kodebarang']
+        namabarang = data['persediaan_barang'][0]['namabarang']
+        jumlahbarang = data['persediaan_barang'][0]['jumlahbarang']
 
         # munculin semua, ga rapi, ada 'u' nya
-        # all_data = data['data_angkatan'][0]
-        data= "nama : "+nama+"\nnrp : "+nrp+"\nalamat : "+alamat
+        # all_data = data['persediaan_barang'][0]
+        data= "kodebarang : "+kodebarang+"\nnamabarang : "+namabarang+"\njumlahbarang : "+jumlahbarang
         return data
         # return all_data
 
     elif(flag == "0"):
         return err
 
-def inputmhs(nama, nrp, alamat):
-    r = requests.post("http://www.aditmasih.tk/api_arinip/insert.php", data={'nama': nama, 'nrp': nrp, 'alamat': alamat})
+def inputbarang(kodebarang, namabarang, jumlahbarang):
+    r = requests.post("http://www.aditmasih.tk/api_arinipunya/insert.php", data={'kodebarang': kodebarang, 'namabarang': namabarang, 'jumlahbarang': jumlahbarang})
     data = r.json()
 
     flag = data['flag']
    
     if(flag == "1"):
-        return 'Data '+nama+' berhasil dimasukkan\n'
+        return 'Data '+kodebarang+' berhasil dimasukkan\n'
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
     
-def hapusmhs(nrp):
-    r = requests.post("http://www.aditmasih.tk/api_arinip/delete.php", data={'nrp': nrp})
+def hapusbarang(kodebarang):
+    r = requests.post("http://www.aditmasih.tk/api_arinipunya/delete.php", data={'kodebarang': kodebarang})
     data = r.json()
 
     flag = data['flag']
    
     if(flag == "1"):
-        return 'Data '+nrp+' berhasil dihapus\n'
+        return 'Data '+kodebarang+' berhasil dihapus\n'
     elif(flag == "0"):
         return 'Data gagal dihapus\n'
     
-def updatemhs(nrpLama,nrp,nama,alamat):
-    URLmhs = "http://www.aditmasih.tk/api_arinip/view.php?nrp=" + nrpLama
+def updatebarang(kodeLama,kodebarang,namabarang,jumlahbarang):
+    URLmhs = "http://www.aditmasih.tk/api_arinip/view.php?nrp=" + kodeLama
     r = requests.get(URLmhs)
     data = r.json()
     err = "data tidak ditemukan"
-    nrp_lama=nrpLama
+    kode_lama=kodeLama
     flag = data['flag']
     if(flag == "1"):
-        r = requests.post("http://www.aditmasih.tk/api_arinip/update.php", data={'nrp': nrp, 'nama': nama, 'alamat': alamat, 'nrp_lama':nrp_lama})
+        r = requests.post("http://www.aditmasih.tk/api_arinipunya/update.php", data={'kodebarang': kodebarang, 'namabarang': namabarang, 'jumlahbarang': jumlahbarang, 'kode_lama':kode_lama})
         data = r.json()
         flag = data['flag']
 
         if(flag == "1"):
-            return 'Data '+nrp_lama+'berhasil diupdate\n'
+            return 'Data '+kode_lama+'berhasil diupdate\n'
         elif(flag == "0"):
             return 'Data gagal diupdate\n'
 
@@ -127,13 +127,13 @@ def handle_message(event):
 
     data=text.split('-')
     if(data[0]=='lihat'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=carimhs(data[1])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=caribarang(data[1])))
     elif(data[0]=='tambah'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=inputmhs(data[1],data[2],data[3])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=inputbarang(data[1],data[2],data[3])))
     elif(data[0]=='hapus'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=hapusmhs(data[1])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=hapusbarang(data[1])))
     elif(data[0]=='ganti'):
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=updatemhs(data[1],data[2],data[3],data[4])))
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=updatebarang(data[1],data[2],data[3],data[4])))
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text = event.message.text + ' ' + profile.display_name))
 
 import os
