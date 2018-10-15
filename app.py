@@ -73,38 +73,26 @@ def inputbarang(kodebarang, namabarang, jumlahbarang):
     elif(flag == "0"):
         return 'Data gagal dimasukkan\n'
     
-def hapusbarang(kodebarang):
-    r = requests.post("http://www.aditmasih.tk/api_arinipunya/delete.php", data={'kodebarang': kodebarang})
-    data = r.json()
-
-    flag = data['flag']
-   
-    if(flag == "1"):
-        return 'Data '+kodebarang+' berhasil dihapus\n'
-    elif(flag == "0"):
-        return 'Data gagal dihapus\n'
-    
-def updatebarang(kodeLama,kodebarang,namabarang,jumlahbarang):
-    URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?kodebarang=" + kode_lama
+#UPDATE
+def updatebarang(kodebarang,kodeLama,namabarang, kodebarang):
+    URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?kode=" + kodeLama
     r = requests.get(URLmhs)
     data = r.json()
-    err = "data tidak ditemukan"
-    kode_lama=kode_lama
+    err = "Data not found"
+    kode_lama=kodeLama
     flag = data['flag']
     if(flag == "1"):
-        r = requests.post("http://www.aditmasih.tk/api_arinipunya/update.php", data={'kodebarang': kodebarang, 'namabarang': namabarang, 'jumlahbarang': jumlahbarang, 'kode_lama':kode_lama})
+        r = requests.post("http://www.aditmasih.tk/api_arinipunya/update.php", data={ 'namabarang': namabarang,'kode_lama':kode_lama,'jumlahbarang': jumlahbarang,'kodebarang': kodebarang})
         data = r.json()
         flag = data['flag']
 
         if(flag == "1"):
-            return 'Data '+kode_lama+'berhasil diupdate\n'
+            return 'Data '+kode_lama+' has been updated successfully\n'
         elif(flag == "0"):
-            return 'Data gagal diupdate\n'
+            return 'Data failed to update\n'
 
     elif(flag == "0"):
-        return err
-
-    
+        return err  
 # Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
