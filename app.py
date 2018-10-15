@@ -85,7 +85,7 @@ def hapusbarang(kodebarang):
         return 'Data gagal dihapus\n' 
 
 #UPDATE
-def updatebarang(kodeLama,kodebarang,namabarang,jumlahbarangbarang):
+def updatebarang(kodeLama,kodebarang,namabarang,jumlahbarang):
     URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?kodebarang=" + kodeLama
     r = requests.get(URLmhs)
     data = r.json()
