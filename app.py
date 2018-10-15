@@ -74,15 +74,15 @@ def inputbarang(kodebarang, namabarang, jumlahbarang):
         return 'Data gagal dimasukkan\n'
     
 #UPDATE
-def updatebarang(kodebarang,kodeLama,namabarang, kodebarang):
-    URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?kode=" + kodeLama
+def updatebarang(kodeLama,kodebarang,namabarang,kodebarang):
+    URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?kodebarang=" + kodeLama
     r = requests.get(URLmhs)
     data = r.json()
     err = "Data not found"
     kode_lama=kodeLama
     flag = data['flag']
     if(flag == "1"):
-        r = requests.post("http://www.aditmasih.tk/api_arinipunya/update.php", data={ 'namabarang': namabarang,'kode_lama':kode_lama,'jumlahbarang': jumlahbarang,'kodebarang': kodebarang})
+        r = requests.post("http://www.aditmasih.tk/api_arinipunya/update.php", data={ 'kode_lama':kode_lama,'namabarang': namabarang,'jumlahbarang': jumlahbarang,'kodebarang': kodebarang})
         data = r.json()
         flag = data['flag']
 
