@@ -42,7 +42,7 @@ handler = WebhookHandler('a4f818fc0c5aa0b0b333c63def153323')
 notes = {}
 #REQUEST DATA MHS dibawah notes = {}
 def caribarang(kodebarang):
-    URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?nrp=" + kodebarang
+    URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?kodebarang=" + kodebarang
     r = requests.get(URLmhs)
     data = r.json()
     err = "data tidak ditemukan"
@@ -85,7 +85,7 @@ def hapusbarang(kodebarang):
         return 'Data gagal dihapus\n'
     
 def updatebarang(kodeLama,kodebarang,namabarang,jumlahbarang):
-    URLmhs = "http://www.aditmasih.tk/api_arinip/view.php?nrp=" + kodeLama
+    URLmhs = "http://www.aditmasih.tk/api_arinip/view.php?kodebarang=" + kodeLama
     r = requests.get(URLmhs)
     data = r.json()
     err = "data tidak ditemukan"
