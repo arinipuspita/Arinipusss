@@ -85,11 +85,11 @@ def hapusbarang(kodebarang):
         return 'Data gagal dihapus\n'
     
 def updatebarang(kodeLama,kodebarang,namabarang,jumlahbarang):
-    URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?kodebarang=" + kodeLama
+    URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?kodebarang=" + kode_lama
     r = requests.get(URLmhs)
     data = r.json()
     err = "data tidak ditemukan"
-    kode_lama=kodeLama
+    kode_lama=kode_lama
     flag = data['flag']
     if(flag == "1"):
         r = requests.post("http://www.aditmasih.tk/api_arinipunya/update.php", data={'kodebarang': kodebarang, 'namabarang': namabarang, 'jumlahbarang': jumlahbarang, 'kode_lama':kode_lama})
