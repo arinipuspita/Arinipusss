@@ -42,20 +42,20 @@ handler = WebhookHandler('a4f818fc0c5aa0b0b333c63def153323')
 notes = {}
 #REQUEST DATA MHS dibawah notes = {}
 def caribarang(kodebarang):
-    URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?kode barang=" + kodebarang
+    URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?kodebarang=" + kodebarang
     r = requests.get(URLmhs)
     data = r.json()
     err = "data tidak ditemukan"
     
     flag = data['flag']
     if(flag == "1"):
-        kodebarang = data['persediaan_barang'][0]['kode barang']
-        namabarang = data['persediaan_barang'][0]['nama barang']
-        jumlahbarang = data['persediaan_barang'][0]['jumlah barang']
+        kodebarang = data['persediaan_barang'][0]['kodebarang']
+        namabarang = data['persediaan_barang'][0]['namabarang']
+        jumlahbarang = data['persediaan_barang'][0]['jumlahbarang']
 
         # munculin semua, ga rapi, ada 'u' nya
         # all_data = data['persediaan_barang'][0]
-        data= "kode barang : "+kodebarang+"\nnama barang : "+namabarang+"\njumlah barang : "+jumlahbarang
+        data= "kodebarang : "+kodebarang+"\nnamabarang : "+namabarang+"\njumlahbarang : "+jumlahbarang
         return data
         # return all_data
 
@@ -63,7 +63,7 @@ def caribarang(kodebarang):
         return err
 
 def inputbarang(kodebarang, namabarang, jumlahbarang):
-    r = requests.post("http://www.aditmasih.tk/api_arinipunya/insert.php", data={'kode barang': kodebarang, 'nama barang': namabarang, 'jumlah barang': jumlahbarang})
+    r = requests.post("http://www.aditmasih.tk/api_arinipunya/insert.php", data={'kodebarang': kodebarang, 'namabarang': namabarang, 'jumlahbarang': jumlahbarang})
     data = r.json()
 
     flag = data['flag']
@@ -74,7 +74,7 @@ def inputbarang(kodebarang, namabarang, jumlahbarang):
         return 'Data gagal dimasukkan\n'
     
 def hapusbarang(kodebarang):
-    r = requests.post("http://www.aditmasih.tk/api_arinipunya/delete.php", data={'kode barang': kodebarang})
+    r = requests.post("http://www.aditmasih.tk/api_arinipunya/delete.php", data={'kodebarang': kodebarang})
     data = r.json()
 
     flag = data['flag']
@@ -85,14 +85,14 @@ def hapusbarang(kodebarang):
         return 'Data gagal dihapus\n'
     
 def updatebarang(kodeLama,kodebarang,namabarang,jumlahbarang):
-    URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?kode barang=" + kode_lama
+    URLmhs = "http://www.aditmasih.tk/api_arinipunya/view.php?kodebarang=" + kode_lama
     r = requests.get(URLmhs)
     data = r.json()
     err = "data tidak ditemukan"
     kode_lama=kode_lama
     flag = data['flag']
     if(flag == "1"):
-        r = requests.post("http://www.aditmasih.tk/api_arinipunya/update.php", data={'kode barang': kodebarang, 'nama barang': namabarang, 'jumlah barang': jumlahbarang, 'kode_lama':kode_lama})
+        r = requests.post("http://www.aditmasih.tk/api_arinipunya/update.php", data={'kodebarang': kodebarang, 'namabarang': namabarang, 'jumlahbarang': jumlahbarang, 'kode_lama':kode_lama})
         data = r.json()
         flag = data['flag']
 
